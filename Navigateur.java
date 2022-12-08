@@ -46,15 +46,15 @@ public class Navigateur extends JFrame {
         setTitle("Navigateur ");
         setBackground(new Color(113, 147, 200));
 
-        menuMethod.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        menuMethod.setFont(new Font("Trebuchet MS", 0, 14));
         menuMethod.setModel(new DefaultComboBoxModel<>(methodOptions));
         menuMethod.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
 
-        searchBar.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        searchBar.setFont(new Font("Trebuchet MS", 0, 14));
         searchBar.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
 
         search.setBackground(new Color(116, 193, 131));
-        search.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        search.setFont(new Font("Trebuchet MS", 0, 14));
         search.setText("Send");
         search.addMouseListener(new Ecouteur(this));
         search.setBorder(null);
