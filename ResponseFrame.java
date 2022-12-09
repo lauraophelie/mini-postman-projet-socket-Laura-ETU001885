@@ -95,29 +95,29 @@ public class ResponseFrame extends JFrame {
 
         this.setTitle(url);
 
-        title.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        title.setFont(new Font("Trebuchet MS", 0, 14));
         title.setText("Status : ");
 
         jButton1.setBackground(new Color(255, 204, 153));
-        jButton1.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        jButton1.setFont(new Font("Trebuchet MS", 0, 14));
         jButton1.setText("Save");
         jButton1.setBorder(null);
         jButton1.addMouseListener(new ResponseListener(this));
 
         jButton2.setBackground(new Color(204, 204, 255));
-        jButton2.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        jButton2.setFont(new Font("Trebuchet MS", 0, 14));
         jButton2.setText("Preview");
         jButton2.setBorder(null);
         jButton2.addMouseListener(new ResponseListener(this));
 
         jButton3.setBackground(new Color(204, 255, 204));
-        jButton3.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        jButton3.setFont(new Font("Trebuchet MS", 0, 14));
         jButton3.setText("Network");
         jButton3.setBorder(null);
         jButton3.addMouseListener(new ResponseListener(this));
 
         jButton4.setBackground(new Color(255, 204, 255));
-        jButton4.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        jButton4.setFont(new Font("Trebuchet MS", 0, 14));
         jButton4.setText("Headers");
         jButton4.setBorder(null);
         jButton4.addMouseListener(new ResponseListener(this));
