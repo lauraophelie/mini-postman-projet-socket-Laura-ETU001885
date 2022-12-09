@@ -46,7 +46,7 @@ public class NetworkPage extends JFrame {
         secondPanel.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
 
         String label2 = "IP address : " + address;
-        title2.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        title2.setFont(new Font("Trebuchet MS", 0, 14));
         title2.setText(label2);
 
         GroupLayout secondPanelLayout = new GroupLayout(secondPanel);
@@ -55,14 +55,14 @@ public class NetworkPage extends JFrame {
             secondPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(secondPanelLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(title2, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
+                .addComponent(title2, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(393, Short.MAX_VALUE))
         );
         secondPanelLayout.setVerticalGroup(
             secondPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(secondPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(title2, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                .addComponent(title2, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

@@ -64,10 +64,19 @@ public class ResponseFrame extends JFrame {
     public void setHost(String host) {
         this.host = host;
     }
+
+    String status;
+
+    public String getStatus() {
+        return this.status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
     
-    public ResponseFrame(String url, Vector<String> body, Vector<String> headers, String host, String address) {
+    public ResponseFrame(String url, Vector<String> body, Vector<String> headers, String host, String address, String status) {
         try {
-            this.initComponents(url, body);
+            this.initComponents(url, body, status);
             this.setLocationRelativeTo(null);
             this.setBody(body);
             this.setHeaders(headers);
@@ -76,12 +85,13 @@ public class ResponseFrame extends JFrame {
             this.setUrl(url);
             this.setHost(host);
             this.setAddress(address);
+            this.setStatus(status);
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void initComponents(String url, Vector<String> body) throws Exception {
+    public void initComponents(String url, Vector<String> body, String status) throws Exception {
 
         title = new JLabel();
         separator = new JSeparator();
@@ -95,29 +105,29 @@ public class ResponseFrame extends JFrame {
 
         this.setTitle(url);
 
-        title.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
-        title.setText("Status : ");
+        title.setFont(new Font("Trebuchet MS", 0, 14));
+        title.setText(status);
 
         jButton1.setBackground(new Color(255, 204, 153));
-        jButton1.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        jButton1.setFont(new Font("Trebuchet MS", 0, 14));
         jButton1.setText("Save");
         jButton1.setBorder(null);
         jButton1.addMouseListener(new ResponseListener(this));
 
         jButton2.setBackground(new Color(204, 204, 255));
-        jButton2.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        jButton2.setFont(new Font("Trebuchet MS", 0, 14));
         jButton2.setText("Preview");
         jButton2.setBorder(null);
         jButton2.addMouseListener(new ResponseListener(this));
 
         jButton3.setBackground(new Color(204, 255, 204));
-        jButton3.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        jButton3.setFont(new Font("Trebuchet MS", 0, 14));
         jButton3.setText("Network");
         jButton3.setBorder(null);
         jButton3.addMouseListener(new ResponseListener(this));
 
         jButton4.setBackground(new Color(255, 204, 255));
-        jButton4.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        jButton4.setFont(new Font("Trebuchet MS", 0, 14));
         jButton4.setText("Headers");
         jButton4.setBorder(null);
         jButton4.addMouseListener(new ResponseListener(this));
@@ -154,8 +164,8 @@ public class ResponseFrame extends JFrame {
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(title, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-                .addGap(201, 201, 201))
+                .addComponent(title, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                .addGap(175, 175, 175))
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)

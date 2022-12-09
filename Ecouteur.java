@@ -26,7 +26,7 @@ public class Ecouteur implements MouseListener {
             try {
                 TraitementURL traitementURL = new TraitementURL(url);
                 ClientSocket clientSocket = new ClientSocket(traitementURL, method);
-                ResponseFrame responseFrame = new ResponseFrame(url, clientSocket.getLines(), clientSocket.getHeaders(), traitementURL.getHost(), traitementURL.getAddress());
+                ResponseFrame responseFrame = new ResponseFrame(url, clientSocket.getLines(), clientSocket.getHeaders(), traitementURL.getHost(), traitementURL.getAddress(), clientSocket.getStatus());
                 responseFrame.setVisible(true);
             } catch(Exception ex) {
                 System.out.println(ex.getMessage());

@@ -11,7 +11,7 @@ public class PageWeb extends JFrame {
             this.initComponents(urlPage);
             this.setLocationRelativeTo(null);
         } catch (Exception e) {
-            throw new Exception("La page n'a pas pu se charger");
+            System.out.println(e.getMessage());
         }
     }
     public void initComponents(String urlPage) throws Exception {

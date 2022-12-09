@@ -29,6 +29,15 @@ public class ClientSocket {
         this.headers = headers;
     }
 
+    String status;
+
+    public String getStatus() {
+        return this.status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public ClientSocket(TraitementURL traitementURL, String method) throws Exception {
         try {
             socket = new Socket(traitementURL.getAddress(), traitementURL.getPort());
@@ -38,10 +47,13 @@ public class ClientSocket {
                 String firstLine = TraitementURL.getRequest(method, traitementURL.getUriLink(), "HTTP/1.1");
                 Vector<String> heads = new Vector<String>();
 
+                System.out.println(traitementURL.getConnection().getHeaderField(0));
+                this.setStatus(traitementURL.getConnection().getHeaderField(0));
                 out.println(firstLine);
-                for(int i = 1; i < 4; i++) {
+                out.println("Host: " + traitementURL.getHost());
+                out.println("cache-control: no-cache");
+                for(int i = 1; i < 6; i++) {
                     heads.add(traitementURL.getConnection().getHeaderFieldKey(i)+": "+ traitementURL.getConnection().getHeaderField(i));
-                    out.println(traitementURL.getConnection().getHeaderFieldKey(i)+": "+ traitementURL.getConnection().getHeaderField(i));
                     System.out.println(traitementURL.getConnection().getHeaderFieldKey(i)+": "+traitementURL.getConnection().getHeaderField(i));
                 }
                 out.println();
