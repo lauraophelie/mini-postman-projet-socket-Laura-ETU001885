@@ -46,7 +46,7 @@ public class NetworkPage extends JFrame {
         secondPanel.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
 
         String label2 = "IP address : " + address;
-        title2.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        title2.setFont(new Font("Trebuchet MS", 0, 14));
         title2.setText(label2);
 
         GroupLayout secondPanelLayout = new GroupLayout(secondPanel);
