@@ -140,7 +140,7 @@ public class ResponseFrame extends JFrame {
 
         StyledDocument doc = textPane.getStyledDocument();
         for(int i = 0; i < body.size(); i++) {
-            doc.insertString(doc.getLength(), body.get(i), styleNormal);
+            doc.insertString(doc.getLength(), body.get(i) + "\n", styleNormal);
         }
 
         scrollPane.setViewportView(textPane);

@@ -50,10 +50,10 @@ public class ClientSocket {
                 System.out.println(traitementURL.getConnection().getHeaderField(0));
                 this.setStatus(traitementURL.getConnection().getHeaderField(0));
                 out.println(firstLine);
-                out.println("User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+                out.println("user-agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
                 out.println("Host: " + traitementURL.getHost());
                 out.println("cache-control: no-cache");
-                for(int i = 1; i < 8; i++) {
+                for(int i = 1; i < 7; i++) {
                     heads.add(traitementURL.getConnection().getHeaderFieldKey(i)+": "+ traitementURL.getConnection().getHeaderField(i));
                     System.out.println(traitementURL.getConnection().getHeaderFieldKey(i)+": "+traitementURL.getConnection().getHeaderField(i));
                 }
