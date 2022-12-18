@@ -1,32 +1,19 @@
 package socket;
-import java.net.*;
-import java.io.*;
 import traitement.*;
-import nav.*;
+import java.io.*;
+import java.net.*;
 import java.util.*;
+import nav.*;
 
 public class ClientSocket {
+    
+    Vector<String> body;
 
-    Socket socket;
-    BufferedReader reader;
-    PrintStream out;
-
-    Vector<String> lines;
-
-    public Vector<String> getLines() {
-        return this.lines;
+    public Vector<String> getBody() {
+        return this.body;
     }
-    public void setLines(Vector<String> lines) {
-        this.lines = lines;
-    }
-
-    Vector<String> headers;
-
-    public Vector<String> getHeaders() {
-        return this.headers;
-    }
-    public void setHeaders(Vector<String> headers) {
-        this.headers = headers;
+    public void setBody(Vector<String> body) {
+        this.body = body;
     }
 
     String status;
@@ -38,52 +25,99 @@ public class ClientSocket {
         this.status = status;
     }
 
-    public ClientSocket(TraitementURL traitementURL, String method) throws Exception {
+    Vector<String> headers;
+
+    public Vector<String> getHeaders() {
+        return this.headers;
+    }
+    public void setHeaders(Vector<String> headers, LinkURL linkURL, int n) {
+        if(headers == null) {
+            headers = new Vector<String>();
+        }
+
+        for(int i = 1; i < n; i++) {
+            headers.add(linkURL.getConnection().getHeaderFieldKey(i) + ": " + linkURL.getConnection().getHeaderField(i));
+            System.out.println(linkURL.getConnection().getHeaderFieldKey(i) + ": " + linkURL.getConnection().getHeaderField(i));
+        }
+        
+        this.setStatus(linkURL.getConnection().getHeaderField(0));
+        this.headers = headers;
+    }
+
+    Socket socket;
+
+    public Socket getSocket() {
+        return this.socket;
+    }
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    BufferedReader reader;
+
+    public BufferedReader getReader() {
+        return this.reader;
+    }
+    public void setReader(BufferedReader reader) {
+        this.reader = reader;
+    }
+
+    PrintStream printer;
+
+    public PrintStream getPrinter() {
+        return this.printer;
+    }
+    public void setPrinter(PrintStream printer) {
+        this.printer = printer;
+    }
+
+    public void initSocket(LinkURL linkURL, String method) throws Exception {
         try {
-            socket = new Socket(traitementURL.getAddress(), traitementURL.getPort());
+            this.socket = new Socket(linkURL.getAddress(), linkURL.getPort());
+
             try {
-                out = new PrintStream(socket.getOutputStream());
+                this.printer = new PrintStream(this.socket.getOutputStream());
 
-                String firstLine = TraitementURL.getRequest(method, traitementURL.getUriLink(), "HTTP/1.1");
-                Vector<String> heads = new Vector<String>();
+                String firstLine = linkURL.setRequest(method, linkURL.getUri(), null);
+                Vector<String> headers = new Vector<String>();
 
-                System.out.println(traitementURL.getConnection().getHeaderField(0));
-                this.setStatus(traitementURL.getConnection().getHeaderField(0));
-                out.println(firstLine);
-                out.println("user-agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
-                out.println("Host: " + traitementURL.getHost());
-                out.println("cache-control: no-cache");
-                for(int i = 1; i < 7; i++) {
-                    heads.add(traitementURL.getConnection().getHeaderFieldKey(i)+": "+ traitementURL.getConnection().getHeaderField(i));
-                    System.out.println(traitementURL.getConnection().getHeaderFieldKey(i)+": "+traitementURL.getConnection().getHeaderField(i));
-                }
-                out.println();
-                out.flush();
+                this.setHeaders(headers, linkURL, 0);
 
-                socket.shutdownOutput();
-                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                printer.println(firstLine);
+                printer.println("Host: " + linkURL.getHost());
+                printer.println("cache-control: no-cache");
+                printer.println();
+                printer.flush();
 
-                Vector<String> res = new Vector<String>();
+                this.socket.shutdownOutput();
+                this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
 
-                for(String responses : reader.lines().toList()) {
-                    System.out.println(responses);
-                    res.add(responses);
+                Vector<String> body = new Vector<String>();
+                for(String responses : this.reader.lines().toList()) {
+                    body.add(responses);
+                    System.out.println(responses + "\n");
                 }
 
-                this.setHeaders(heads);
-                this.setLines(res);
-
-                socket.close();
+                this.setBody(body);
+                this.socket.close();
             } catch(IOException ie) {
-                System.out.println(ie.getMessage());
-                ie.printStackTrace();
+                throw new Exception(ie.getMessage());
             }
-        } catch(UnknownHostException ue) {
-            System.out.println(ue.getMessage());
-            ue.printStackTrace();
+        } catch (UnknownHostException un) {
+            throw new Exception(un.getMessage());
         }
     }
+
+    public ClientSocket() {}
+    public ClientSocket(LinkURL linkURL, String method) throws Exception {
+        this.initSocket(linkURL, method);
+    }
+
     public static void main(String [] args) {
-        Navigateur navigateur = new Navigateur();
+        try {
+            Navigateur navigateur = new Navigateur();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

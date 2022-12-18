@@ -1,90 +1,130 @@
 package nav;
 import javax.swing.*;
+
+import listener.Ecouteur;
+
 import java.awt.*;
-import listener.*;
 
 public class Navigateur extends JFrame {
 
-    JButton search;
+    JButton sendButton;
 
+    JComboBox<String> methodList;
 
-    JComboBox<String> menuMethod;
-
-    public JComboBox<String> getMenuMethod() {
-        return this.menuMethod;
+    public JComboBox<String> getMethodList() {
+        return this.methodList;
     }
-    public void setMenuMethod(JComboBox<String> menuMethod) {
-        this.menuMethod = menuMethod;
-    }
-
-    JTextField searchBar;
-
-    public JTextField getSearchBar() {
-        return this.searchBar;
-    }
-    public void setSearchBar(JTextField searchBar) {
-        this.searchBar = searchBar;
+    public void setMethodList(JComboBox<String> methodList) {
+        this.methodList = methodList;
     }
 
-    public Navigateur() {
-        initComponents();
-        this.setTitle("Navigateur");
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-        this.setResizable(false);
+    JLabel error;
+
+    public JLabel getError() {
+        return this.error;
+    }
+    public void setError(JLabel error) {
+        this.error = error;
     }
 
+    JPanel errorPanel;
+
+    public JPanel getErrorPanel() {
+        return this.errorPanel;
+    }
+    public void setErrorPanel(JPanel errorPanel) {
+        this.errorPanel = errorPanel;
+    }
+
+    JTextField urlSearch;
+
+    public JTextField getUrlSearch() {
+        return this.urlSearch;
+    }
+    public void setUrlSearch(JTextField urlSearch) {
+        this.urlSearch = urlSearch;
+    }
     public void initComponents() {
 
-        String [] methodOptions = {"GET", "POST", "PUT"};
+        methodList = new JComboBox<>();
+        urlSearch = new JTextField();
+        sendButton = new JButton();
+        errorPanel = new JPanel();
+        error = new JLabel();
 
-        menuMethod = new JComboBox<>();
-        searchBar = new JTextField();
-        search = new JButton();
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setTitle("Mini - Postman");
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Navigateur ");
-        setBackground(new Color(113, 147, 200));
+        methodList.setBackground(new Color(204, 204, 255));
+        methodList.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        methodList.setModel(new DefaultComboBoxModel<>(new String[] { "GET", "POST", "PUT", "DELETE" }));
 
-        menuMethod.setFont(new Font("Trebuchet MS", 0, 14));
-        menuMethod.setModel(new DefaultComboBoxModel<>(methodOptions));
-        menuMethod.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
+        urlSearch.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        urlSearch.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
 
-        searchBar.setFont(new Font("Trebuchet MS", 0, 14));
-        searchBar.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
+        sendButton.setBackground(new Color(0, 102, 255));
+        sendButton.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+        sendButton.setText("Send");
+        sendButton.setBorder(null);
+        sendButton.addMouseListener(new Ecouteur(this));
 
-        search.setBackground(new Color(116, 193, 131));
-        search.setFont(new Font("Trebuchet MS", 0, 14));
-        search.setText("Send");
-        search.addMouseListener(new Ecouteur(this));
-        search.setBorder(null);
+        errorPanel.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
+
+        error.setFont(new Font("Trebuchet MS", 0, 14)); // NOI18N
+
+        GroupLayout errorPanelLayout = new GroupLayout(errorPanel);
+        errorPanel.setLayout(errorPanelLayout);
+        errorPanelLayout.setHorizontalGroup(
+            errorPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(errorPanelLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(error, GroupLayout.PREFERRED_SIZE, 511, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        errorPanelLayout.setVerticalGroup(
+            errorPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(errorPanelLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(error, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(search, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addComponent(errorPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(menuMethod, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(searchBar, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                        .addComponent(methodList, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(urlSearch, GroupLayout.PREFERRED_SIZE, 332, GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                    .addComponent(menuMethod, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(searchBar))
-                .addGap(26, 26, 26)
-                .addComponent(search, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                    .addComponent(methodList, GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(urlSearch)
+                    .addComponent(sendButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(errorPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
+    }
+
+    public Navigateur() {
+        this.initComponents();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        this.setResizable(false);
     }
 }

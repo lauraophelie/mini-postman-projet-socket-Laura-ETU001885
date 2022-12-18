@@ -1,17 +1,15 @@
 package listener;
-import nav.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.event.*;
+import java.util.Vector;
+
 import traitement.*;
+import nav.*;
 import socket.*;
 
 public class Ecouteur implements MouseListener {
 
     Navigateur navigateur;
-
-    public Navigateur getNavigateur() {
-        return this.navigateur;
-    }
 
     public Ecouteur() {}
     public Ecouteur(Navigateur navigateur) {
@@ -19,30 +17,45 @@ public class Ecouteur implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent e) {
+
         JButton button = (JButton) e.getSource();
-        String url = this.navigateur.getSearchBar().getText();
-        String method = this.navigateur.getMenuMethod().getItemAt(this.navigateur.getMenuMethod().getSelectedIndex());
-        if(button.getText().equals("Send")) {
+        String url = this.navigateur.getUrlSearch().getText();
+        String method = this.navigateur.getMethodList().getItemAt(this.navigateur.getMethodList().getSelectedIndex());
+
+        if(button.getText() == "Send") {
             try {
-                TraitementURL traitementURL = new TraitementURL(url);
-                ClientSocket clientSocket = new ClientSocket(traitementURL, method);
-                ResponseFrame responseFrame = new ResponseFrame(url, clientSocket.getLines(), clientSocket.getHeaders(), traitementURL.getHost(), traitementURL.getAddress(), clientSocket.getStatus());
-                responseFrame.setVisible(true);
-            } catch(Exception ex) {
-                System.out.println(ex.getMessage());
+                LinkURL linkURL = new LinkURL(url);
+                try {
+                    ClientSocket clientSocket = new ClientSocket(linkURL, method);
+                    
+                    Vector<String> body = clientSocket.getBody();
+                    Vector<String> headers = clientSocket.getHeaders();
+                    String host = linkURL.getHost();
+                    String status = clientSocket.getStatus();
+                    String address = linkURL.getAddress();
+
+                    ResponseFrame responseFrame = new ResponseFrame(url, body, headers, host, address, status);
+                    responseFrame.setVisible(true);
+
+                } catch(Exception e2) {
+                    this.navigateur.getError().setText(e2.getMessage());
+                }
+            } catch(Exception e1) {
+                this.navigateur.getError().setText(e1.getMessage());
             }
         }
     }
     public void mousePressed(MouseEvent e) {
 
     }
-    public void mouseReleased(MouseEvent e) {
+    public void mouseEntered(MouseEvent e) {
 
     }
-    public void mouseEntered(MouseEvent e) {
+    public void mouseReleased(MouseEvent e) {
 
     }
     public void mouseExited(MouseEvent e) {
 
     }
+
 }

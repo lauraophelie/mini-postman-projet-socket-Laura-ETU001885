@@ -30,8 +30,8 @@ public class ResponseListener implements MouseListener {
             pageWeb.setVisible(true);
         } 
         if(button.getText().equals("Headers")) {
-            HeadersPage headersPage = new HeadersPage(this.responseFrame.getHeaders());
-            headersPage.setVisible(true);
+            // HeadersPage headersPage = new HeadersPage(this.responseFrame.getHeaders());
+            // headersPage.setVisible(true);
         }
         if(button.getText().equals("Network")) {
             NetworkPage networkPage = new NetworkPage(this.responseFrame.getHost(), this.responseFrame.getAddress());
