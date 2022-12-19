@@ -81,7 +81,7 @@ public class ClientSocket {
                 String firstLine = linkURL.setRequest(method, linkURL.getUri(), null);
                 Vector<String> headers = new Vector<String>();
 
-                this.setHeaders(headers, linkURL, 0);
+                this.setHeaders(headers, linkURL, 7);
 
                 printer.println(firstLine);
                 printer.println("Host: " + linkURL.getHost());
